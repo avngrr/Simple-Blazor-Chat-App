@@ -1,9 +1,42 @@
 ﻿@page "/chat"
 
+<div class="d-flex flex-grow-1 flex-row">
+    <MudPaper Class="m-3">
+        <MudTabs>
+            <MudTabPanel Text="Contacts">
+                <MudTextField @bind-Value="SearchStringContacts" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" @oninput="(() => OnSearchInput())"></MudTextField>
+                <MudText>List of contacts</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Groups">
+                <MudText>List of groups</MudText>
+                <MudTextField @bind-Value="SearchStringGroups" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" @oninput="(() => OnSearchInput())"></MudTextField>
+                <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
+            </MudTabPanel>
+        </MudTabs>
+    </MudPaper>
+    <MudPaper Class="m-3 flex-grow-1">
+        <MudToolBar>
+            <MudText>Chat</MudText>
+        </MudToolBar>
+    </MudPaper>
+</div>
 @code {
-    private async Task OnSearchInput(string searchInput)
+    private string SearchStringContacts { get; set; } = "";
+    private string SearchStringGroups { get; set; } = "";
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        //searchText = searchInput;
-        //await FilterSuggestions();
+        if (firstRender)
+        {
+            await FilterSuggestions();
+            StateHasChanged();
+        }
+    }
+    private async Task OnSearchInput()
+    {
+        await FilterSuggestions();
+    }
+    private async Task FilterSuggestions()
+    {
     }
 }
