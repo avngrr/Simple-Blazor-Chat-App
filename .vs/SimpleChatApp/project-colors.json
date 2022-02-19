@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1a83e01f-13a9-4f53-b7b8-46ef03129cdb": {
+      "ProjectGuid": "1a83e01f-13a9-4f53-b7b8-46ef03129cdb",
+      "DisplayName": "SimpleChatApp.Server",
+      "ColorIndex": 0
+    },
+    "742d00b1-7748-4e25-a2e6-d583ba268d94": {
+      "ProjectGuid": "742d00b1-7748-4e25-a2e6-d583ba268d94",
+      "DisplayName": "SimpleChatApp.Client",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

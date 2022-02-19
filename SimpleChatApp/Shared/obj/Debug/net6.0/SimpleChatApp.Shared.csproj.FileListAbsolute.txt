@@ -1,0 +1,12 @@
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\bin\Debug\net6.0\SimpleChatApp.Shared.deps.json
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\bin\Debug\net6.0\SimpleChatApp.Shared.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\bin\Debug\net6.0\ref\SimpleChatApp.Shared.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\bin\Debug\net6.0\SimpleChatApp.Shared.pdb
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.csproj.AssemblyReference.cache
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.AssemblyInfoInputs.cache
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.AssemblyInfo.cs
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.csproj.CoreCompileInputs.cache
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\ref\SimpleChatApp.Shared.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Shared\obj\Debug\net6.0\SimpleChatApp.Shared.pdb

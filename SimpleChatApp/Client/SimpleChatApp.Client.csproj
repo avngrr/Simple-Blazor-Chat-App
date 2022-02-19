@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\bootstrap\.github\CODEOWNERS" />
+    <None Include="wwwroot\bootstrap\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\bootstrap\.github\dependabot.yml" />
+    <None Include="wwwroot\bootstrap\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\bootstrap\.github\ISSUE_TEMPLATE\config.yml" />
+    <None Include="wwwroot\bootstrap\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\bootstrap\.github\release-drafter.yml" />
+    <None Include="wwwroot\bootstrap\.github\SUPPORT.md" />
+    <None Include="wwwroot\bootstrap\.github\workflows\browserstack.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\bundlewatch.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\css.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\docs.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\js.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\lint.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\node-sass.yml" />
+    <None Include="wwwroot\bootstrap\.github\workflows\release-notes.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="mudblazor" Version="6.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\SimpleChatApp.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
