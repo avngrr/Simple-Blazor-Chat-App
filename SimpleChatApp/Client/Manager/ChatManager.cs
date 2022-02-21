@@ -14,11 +14,18 @@ namespace SimpleChatApp.Client.Manager
             return await _httpClient.GetFromJsonAsync<List<Message>>($"api/chat/{groupId}");
         }
 
-        public async Task<AppUser> GetUserDetailsAsync(string userId)
+        public async Task<ChatGroup> GetChatWithUserAsync(string userId)
         {
-            return await _httpClient.GetFromJsonAsync<AppUser>($"api/chat/users/{userId}");
+            return await _httpClient.GetFromJsonAsync<ChatGroup>($"api/chat/users/{userId}");
         }
-
+        public async Task<List<ChatGroup>> GetChatGroupsAsync()
+        {
+            return await _httpClient.GetFromJsonAsync<List<ChatGroup>>("api/chat/chatgroups");
+        }
+        public async Task<ChatGroup> GetChatGroupDetailAsync(long groupId)
+        {
+            return await _httpClient.GetFromJsonAsync<ChatGroup>($"api/chat/chatgroups/{groupId}");
+        }
         public async Task<List<AppUser>> GetUsersAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<AppUser>>("api/chat/users");
@@ -27,6 +34,11 @@ namespace SimpleChatApp.Client.Manager
         public async Task SaveMessageAsync(Message message)
         {
             await _httpClient.PostAsJsonAsync("api/chat", message);
+        }
+
+        public async Task CreateChatGroupAsync(ChatGroup chat)
+        {
+            await _httpClient.PostAsJsonAsync("api/chat/chatgroup", chat);
         }
     }
 }

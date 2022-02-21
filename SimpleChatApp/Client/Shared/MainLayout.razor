@@ -1,6 +1,5 @@
-﻿@inherits LayoutComponentBase
-
-
+﻿@using Microsoft.AspNetCore.SignalR.Client
+@inherits LayoutComponentBase
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
@@ -17,15 +16,49 @@
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        @Body
+        <CascadingValue Value="chatHub">
+            @Body
+        </CascadingValue>
     </MudMainContent>
 </MudLayout>
 
 @code {
     bool _drawerOpen = true;
+    private List<ChatGroup> myChatGroups;
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    private HubConnection chatHub;
+    private string CurrentUserId;
+    public bool IsConnected => chatHub.State == HubConnectionState.Connected;
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await _stateProvider.GetAuthenticationStateAsync();
+        var user = state.User;
+        CurrentUserId = user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault();
+        chatHub = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/chathub")).Build();
+        await chatHub.StartAsync();
+        chatHub.On<string, long, string>("ReceiveChatNotification", (message, groupId, senderUserId) =>
+        {
+            if (myChatGroups.Any(c => c.Id == groupId))
+        {
+                _snackBar.Add(message, Severity.Info, config =>
+                {
+                    config.VisibleStateDuration = 10000;
+                    config.HideTransitionDuration = 500;
+                    config.ShowTransitionDuration = 500;
+                    config.Action = "Chat?";
+                    config.ActionColor = Color.Info;
+                    config.Onclick = snackbar =>
+                    {
+                        _navigationManager.NavigateTo($"chat/{senderUserId}");
+                        return Task.CompletedTask;
+                    };
+                });
+            }
+        });     
     }
 }

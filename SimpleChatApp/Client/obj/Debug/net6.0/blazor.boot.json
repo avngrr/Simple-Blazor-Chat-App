@@ -14,10 +14,17 @@
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-0WGY9O6mBIfsbqEqVkudOQWESYqKRhaTioQk3Twqvdw=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-8Zk+1aqFk60UAGDm7pdqwLays3Lr2ICp6uJ3Z8MPCCE=",
       "Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll": "sha256-J+GEhSs7RElL8esN4UTBk0kX5HD\/prjzQ6+i\/t0R9gQ=",
+      "Microsoft.AspNetCore.Connections.Abstractions.dll": "sha256-phCGK0ANjovdDG4zLs5AjjTHespiGdqM1jseA\/DG2B0=",
       "Microsoft.AspNetCore.Cryptography.Internal.dll": "sha256-03ZUcvm6iolq88duQpB\/pOjf8DHEQ7nqWcPCIElHjfA=",
       "Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": "sha256-PlLXKXuRNY5Hsz\/7R8RPe1SEKSJHjw5e7iCyBZILwWQ=",
+      "Microsoft.AspNetCore.Http.Connections.Client.dll": "sha256-IUhDPwyKzObcH2Mr8EwZXEC1MSdrQivDVZrpYorGi9Y=",
+      "Microsoft.AspNetCore.Http.Connections.Common.dll": "sha256-sM8Wp+qKF7lsN2C\/NECtp\/QXEttY0+VOFZ9594KKy9U=",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": "sha256-I+asgjFU19+rYaZpFGvEGkhIVk5eiVPkIhhEFqF4jNc=",
       "Microsoft.AspNetCore.Metadata.dll": "sha256-gnc+PVbmWP6vWXYgIbnhIyEll2ok6iKRa9wueeJF5lU=",
+      "Microsoft.AspNetCore.SignalR.Client.dll": "sha256-VuNQrWF3KpvGA9K1UfACDC6fC9aehA1eBquD\/2hDbg8=",
+      "Microsoft.AspNetCore.SignalR.Client.Core.dll": "sha256-9RFEMqtGMFXChMjzsVmI6jspAfY3JtfWnijNBnJS+AI=",
+      "Microsoft.AspNetCore.SignalR.Common.dll": "sha256-N3frPP7GEim+aYSkVm4e2hD9zcgGU1scszN5n3Hi4Kc=",
+      "Microsoft.AspNetCore.SignalR.Protocols.Json.dll": "sha256-y2VvLDOY+Vdbd6yAb4VmUxqmDUuXniJM\/U0nFXv4Dlg=",
       "Microsoft.EntityFrameworkCore.dll": "sha256-rkoXgOiwTfY\/9CgBvo+m8brwmC9n9Arip9PyRMtbwtI=",
       "Microsoft.EntityFrameworkCore.Abstractions.dll": "sha256-bPYRpYponDxgZr4SKvFc+8S7e4I4VO2FR0TcrRWp2tM=",
       "Microsoft.EntityFrameworkCore.Relational.dll": "sha256-1oDgNGloyzZ3bYLOZMQy8gJLkVtmbryPV3KSdaQnrQw=",
@@ -30,6 +37,7 @@
       "Microsoft.Extensions.Configuration.Json.dll": "sha256-R28\/ywLWxIcFxKtDIj0IxC+bXi4urX6BHeLL24R+vTQ=",
       "Microsoft.Extensions.DependencyInjection.dll": "sha256-KqgYK1NWqMxcNfw2Qah+gUhX2Nm+OZrHjyYDQ3VNCeA=",
       "Microsoft.Extensions.DependencyInjection.Abstractions.dll": "sha256-nM2DA1GqKLxoPU+NHO\/Z5yQWH5ctJb+2Tu5b9VxIxeM=",
+      "Microsoft.Extensions.Features.dll": "sha256-32SVFDmyEkHDZEXVG15w\/eihnOVf9EW81OP9dotnto4=",
       "Microsoft.Extensions.FileProviders.Abstractions.dll": "sha256-7PzvEcQvpK1c8tTX9VPI8AF+XrekqbAytNBQXJjvTvQ=",
       "Microsoft.Extensions.FileProviders.Physical.dll": "sha256-sXujvGMZDgBBZ9HqfcEq9XsM0pvwyhPt60NA9qLDzGI=",
       "Microsoft.Extensions.FileSystemGlobbing.dll": "sha256-viiXOG0fwhWobT0TQ1ZOJiZBdRvYRlWbDtjz+6d8sQI=",
@@ -210,15 +218,15 @@
       "mscorlib.dll": "sha256-+5VU+MYaTQMTlRe9QKobEjWZWv6I9teAGdNndWSBqWE=",
       "netstandard.dll": "sha256-E5RFhGIaDH5QM6BEbFUuHU8U9wP6N6jbo5MCttzLOCM=",
       "System.Private.CoreLib.dll": "sha256-9NtEbYixyog7vUmeYXyyqzfBXUYl8wxoVQ26Ji7sNRg=",
-      "SimpleChatApp.Shared.dll": "sha256-BmWgKAo3TMPj+usc7b0xRoryhccslsJqER10gJNwkQc=",
-      "SimpleChatApp.Client.dll": "sha256-ssrmv\/AIc7IwgZLqG2dV2UjWYukgII7GhCUxGxLEjFE="
+      "SimpleChatApp.Shared.dll": "sha256-0ZQSoNpdVtSm5PXUHAhA2Mw+VXNTAN6dq69VWjL\/UGE=",
+      "SimpleChatApp.Client.dll": "sha256-\/N6\/FNRf6Nj0J46lgvmKgpHxyZswXc2kMY7rSKE6uv0="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "SimpleChatApp.Shared.pdb": "sha256-R\/RlRNaQUEOnko9frdyk5tIA70sk+RzQ0iWG9gTW\/j8=",
-      "SimpleChatApp.Client.pdb": "sha256-rQVZ69pjgXo6X18paWMIOy88rQKoKAANty+LlLjP4ro="
+      "SimpleChatApp.Shared.pdb": "sha256-dfF4C1S3T1dG2V4kIwCFEUpdt\/WVMk2tvTZf\/ghAaEo=",
+      "SimpleChatApp.Client.pdb": "sha256-4OG4g3wt2mVNauE4HQWICBuQXmbFXJ5cufGnmW5SMZo="
     },
     "runtime": {
       "dotnet.6.0.1.mbxe6xynlj.js": "sha256-awQsJ\/WxYhouHPuE+i3eJqjA4XClQlr2rD6nKvW80ww=",

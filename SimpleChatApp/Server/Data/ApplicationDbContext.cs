@@ -13,19 +13,32 @@ namespace SimpleChatApp.Server.Data
         {
         }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<ChatGroup> ChatGroups { get; set; }
+        public DbSet<ChatGroup> Chats { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Message>(entity =>
             {
-                entity.HasOne(d => d.From)
-                    .WithMany(p => p.ChatMessagesFrom)
-                    .HasForeignKey(d => d.FromId)
+                entity.HasOne(message => message.From)
+                    .WithMany(user => user.SentMessages)
+                    .HasForeignKey(m => m.FromId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
-                entity.HasOne(d => d.To)
-                    .WithMany(p => p.ChatMessages)
-                    .HasForeignKey(d => d.ToId)
+                entity.HasOne(message => message.Chat)
+                    .WithMany(c => c.ChatMessages)
+                    .HasForeignKey(m => m.ChatId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            builder.Entity<AppUser>(entity =>
+            {
+                entity.HasMany(u => u.Chats)
+                    .WithMany(c => c.ChatUsers)
+                    .UsingEntity("UserChats");
+            });
+            builder.Entity<ChatGroup>(entity =>
+            {
+                entity.HasOne(cg => cg.StartedBy)
+                    .WithMany(u => u.StartedChats)
+                    .HasForeignKey(k => k.StartedById)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }

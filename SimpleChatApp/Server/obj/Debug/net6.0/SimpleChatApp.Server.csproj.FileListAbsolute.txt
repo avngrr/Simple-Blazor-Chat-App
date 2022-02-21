@@ -101,3 +101,11 @@ C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\obj\Debug\ne
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\obj\Debug\net6.0\SimpleChatApp.Server.pdb
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\obj\Debug\net6.0\SimpleChatApp.Server.genruntimeconfig.cache
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\MudBlazor.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.Extensions.Features.dll

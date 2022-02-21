@@ -9,11 +9,11 @@ using SimpleChatApp.Server.Data;
 
 #nullable disable
 
-namespace SimpleChatApp.Server.Data.Migrations
+namespace SimpleChatApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220219124601_chatModels")]
-    partial class chatModels
+    [Migration("20220220225957_InitalDbCreate")]
+    partial class InitalDbCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -310,9 +310,6 @@ namespace SimpleChatApp.Server.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<long?>("ChatGroupId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -359,8 +356,6 @@ namespace SimpleChatApp.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatGroupId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -383,9 +378,17 @@ namespace SimpleChatApp.Server.Data.Migrations
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StartedById")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ChatGroup");
+                    b.HasIndex("StartedById");
+
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("SimpleChatApp.Shared.Models.Message", b =>
@@ -396,8 +399,8 @@ namespace SimpleChatApp.Server.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("ChatId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -408,18 +411,28 @@ namespace SimpleChatApp.Server.Data.Migrations
                     b.Property<string>("MessageText")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ToId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("ChatId");
 
                     b.HasIndex("FromId");
 
-                    b.HasIndex("ToId");
-
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("UserChats", b =>
+                {
+                    b.Property<string>("ChatUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long>("ChatsId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ChatUsersId", "ChatsId");
+
+                    b.HasIndex("ChatsId");
+
+                    b.ToTable("UserChats");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -473,45 +486,56 @@ namespace SimpleChatApp.Server.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SimpleChatApp.Shared.Models.AppUser", b =>
+            modelBuilder.Entity("SimpleChatApp.Shared.Models.ChatGroup", b =>
                 {
-                    b.HasOne("SimpleChatApp.Shared.Models.ChatGroup", null)
-                        .WithMany("ChatUsers")
-                        .HasForeignKey("ChatGroupId");
+                    b.HasOne("SimpleChatApp.Shared.Models.AppUser", "StartedBy")
+                        .WithMany("StartedChats")
+                        .HasForeignKey("StartedById");
+
+                    b.Navigation("StartedBy");
                 });
 
             modelBuilder.Entity("SimpleChatApp.Shared.Models.Message", b =>
                 {
-                    b.HasOne("SimpleChatApp.Shared.Models.AppUser", null)
-                        .WithMany("ChatMessagesTo")
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("SimpleChatApp.Shared.Models.AppUser", "From")
-                        .WithMany("ChatMessagesFrom")
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("SimpleChatApp.Shared.Models.ChatGroup", "To")
+                    b.HasOne("SimpleChatApp.Shared.Models.ChatGroup", "Chat")
                         .WithMany("ChatMessages")
-                        .HasForeignKey("ToId")
+                        .HasForeignKey("ChatId")
                         .IsRequired();
 
-                    b.Navigation("From");
+                    b.HasOne("SimpleChatApp.Shared.Models.AppUser", "From")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("FromId");
 
-                    b.Navigation("To");
+                    b.Navigation("Chat");
+
+                    b.Navigation("From");
+                });
+
+            modelBuilder.Entity("UserChats", b =>
+                {
+                    b.HasOne("SimpleChatApp.Shared.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("ChatUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SimpleChatApp.Shared.Models.ChatGroup", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SimpleChatApp.Shared.Models.AppUser", b =>
                 {
-                    b.Navigation("ChatMessagesFrom");
+                    b.Navigation("SentMessages");
 
-                    b.Navigation("ChatMessagesTo");
+                    b.Navigation("StartedChats");
                 });
 
             modelBuilder.Entity("SimpleChatApp.Shared.Models.ChatGroup", b =>
                 {
                     b.Navigation("ChatMessages");
-
-                    b.Navigation("ChatUsers");
                 });
 #pragma warning restore 612, 618
         }

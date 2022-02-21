@@ -1,42 +1,195 @@
 ﻿@page "/chat"
+@page "/chat/{GroupId}"
+@using Microsoft.AspNetCore.SignalR.Client
 
 <div class="d-flex flex-grow-1 flex-row">
     <MudPaper Class="m-3">
         <MudTabs>
             <MudTabPanel Text="Contacts">
-                <MudTextField @bind-Value="SearchStringContacts" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" @oninput="(() => OnSearchInput())"></MudTextField>
-                <MudText>List of contacts</MudText>
+                <MudList Clickable="true">
+                    @foreach (AppUser user in userList)
+                    {
+                        <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadUserChat(user))">
+                            <div class="d-flex flex-row mt-n1 mb-n1">
+                                <div class="mr-4">
+                                    <MudBadge Class="my-2">
+                                        <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@user.UserName.ToUpper().FirstOrDefault()</MudAvatar>
+                                    </MudBadge>
+                                </div>
+                                <div>
+                                    <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@user.UserName</MudText>
+                                    <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@user.Email</MudText>
+                                </div>
+                            </div>
+                        </MudListItem>
+                    }
+                </MudList>
             </MudTabPanel>
             <MudTabPanel Text="Groups">
-                <MudText>List of groups</MudText>
-                <MudTextField @bind-Value="SearchStringGroups" Label="Search" Variant="Variant.Outlined" Margin="Margin.Dense" @oninput="(() => OnSearchInput())"></MudTextField>
-                <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
+                @foreach (ChatGroup cg in groupList)
+                    {
+                        <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadChat(cg))">
+                            <div class="d-flex flex-row mt-n1 mb-n1">
+                                <div class="mr-4">
+                                    <MudBadge Class="my-2">
+                                        <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@cg.Name.ToUpper().FirstOrDefault()</MudAvatar>
+                                    </MudBadge>
+                                </div>
+                                <div>
+                                    <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@cg.Name</MudText>
+                                    <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">Users: @cg.ChatUsers.Count</MudText>
+                                </div>
+                            </div>
+                        </MudListItem>
+                    }
+                <MudFab Color="Color.Primary" @onclick="CreateChatGroup" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
             </MudTabPanel>
         </MudTabs>
     </MudPaper>
     <MudPaper Class="m-3 flex-grow-1">
-        <MudToolBar>
-            <MudText>Chat</MudText>
+        <MudToolBar Dense="true">
+            @if (CurrentGroup.Id == 0)
+            {
+                <MudIcon Icon="@Icons.Material.Outlined.Person" Style="margin-right:10px"></MudIcon>
+                <MudText Typo="Typo.h6">chat</MudText>
+            }
+            else
+            {
+                <MudIcon Icon="@Icons.Material.Outlined.ChatBubble" Style="margin-right:10px"></MudIcon>
+                <MudText Typo="Typo.h6">@CurrentGroup.Id</MudText>
+            }
         </MudToolBar>
+        <div class="d-flex flex-column px-4" style="max-height:65vh;min-height:65vh; overflow:scroll;" id="chatContainer">
+            @foreach (var message in messages)
+            {
+                <div class="d-flex flex-row my-4">
+                    <div class="mr-4">
+                        <MudAvatar Color="Color.Secondary" Style="height:50px; width:50px;">@message.From.Email.ToUpper().FirstOrDefault()</MudAvatar>
+                    </div>
+                    <div>
+                        <MudText Typo="Typo.body1">@message.From.Email</MudText>
+                        <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@message.CreatedDate.ToString("dd MMM, yyyy hh:mm tt")</MudText>
+                        <MudText Typo="Typo.body2" Style=" padding: 15px;background-color: var(--mud-palette-background-grey);border-radius: 5px;margin-top:5px">@message.MessageText</MudText>
+                    </div>
+                </div>
+            }
+        </div>
+        <MudPaper Elevation="25" Class="d-flex flex-row px-2 mx-4" Style="">
+            <MudTextField Placeholder="Enter your message..." DisableUnderLine="true" Class="mt-n2 mx-4"
+                          @bind-Value="CurrentMessage" />
+            <MudButton OnClick="SubmitAsync" StartIcon="@Icons.Material.Outlined.Send" Color="Color.Secondary" ButtonType="ButtonType.Button">Send</MudButton>
+        </MudPaper>
     </MudPaper>
 </div>
-@code {
-    private string SearchStringContacts { get; set; } = "";
-    private string SearchStringGroups { get; set; } = "";
 
-    protected async override Task OnAfterRenderAsync(bool firstRender)
+@code {
+    [CascadingParameter] public HubConnection chatHub { get; set; }
+    [Parameter] public string? GroupId { get; set; }
+
+    private List<AppUser> userList;
+    private List<ChatGroup> groupList;
+    private List<ChatGroup> myChatGroups;
+    private List<Message> messages = new List<Message>();
+
+    private string CurrentUserId;    
+    private string CurrentMessage;
+    private ChatGroup CurrentGroup;
+    private AppUser CurrentContact;
+
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
+        var state = await _stateProvider.GetAuthenticationStateAsync();
+        var user = state.User;
+        CurrentUserId = user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault();
+        if (!string.IsNullOrEmpty(GroupId))
         {
-            await FilterSuggestions();
-            StateHasChanged();
+            await LoadGroupChat(long.Parse(GroupId));
         }
+        await SetUpHubAsync();
+        await GetUsersAsync();
+        await GetChatGroupsAsync();
     }
-    private async Task OnSearchInput()
+    private async Task SubmitAsync()
     {
-        await FilterSuggestions();
+        if (!string.IsNullOrEmpty(CurrentMessage))
+        {
+            if (CurrentGroup.Id == 0)
+            {
+                CurrentGroup = new();
+                CurrentGroup.Name = CurrentContact.Id;
+                CurrentGroup.ChatUsers.Add(CurrentContact);
+                CurrentGroup.IsPrivate = true;
+            }
+            var message = new Message()
+            {
+                MessageText = CurrentMessage,
+                ChatId = CurrentGroup.Id,
+                CreatedDate = DateTime.Now,
+                Chat = CurrentGroup,
+                FromId = CurrentUserId
+            };
+            await _chatManager.SaveMessageAsync(message);
+            await chatHub.SendAsync("SendMessageAsync", message, CurrentGroup.Name);
+            CurrentGroup = await _chatManager.GetChatWithUserAsync(CurrentContact.Id);
+            CurrentMessage = string.Empty;
+        } 
+
     }
-    private async Task FilterSuggestions()
+    private async Task CreateChatGroup()
     {
+
+    }
+    private async Task SetUpHubAsync()
+    {
+        if (chatHub == null)
+        {
+            chatHub = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/chathub")).Build();
+        }
+        if (chatHub.State == HubConnectionState.Disconnected)
+        {
+            await chatHub.StartAsync();
+        }
+        chatHub.On<Message, string>("ReceiveChatNotification", async (message, userName) =>
+        {
+            if (CurrentGroup.Id == message.ChatId)
+            {
+                messages.Add(new Message { MessageText = message.MessageText, CreatedDate = message.CreatedDate, From = new AppUser() { UserName = userName } });
+            }
+            if (CurrentUserId == message.FromId)
+            {
+                await chatHub.SendAsync("ChatNotificationAsync", $"New Message From {userName}", CurrentGroup.Id, CurrentUserId);
+            }
+            StateHasChanged();
+        });
+    }
+
+    //Load chat
+    private async Task LoadGroupChat(long groupId)
+    {
+        CurrentGroup = await _chatManager.GetChatGroupDetailAsync(groupId);
+        await LoadChat(CurrentGroup);
+    }
+    private async Task LoadUserChat(AppUser user)
+    {
+        CurrentContact = user;
+        CurrentGroup = await _chatManager.GetChatWithUserAsync(user.Id);
+        await LoadChat(CurrentGroup);
+    }
+    private async Task LoadChat(ChatGroup cg)
+    {        
+        _navigationManager.NavigateTo($"chat/{cg.Id}");
+        messages = new List<Message>();
+        messages = await _chatManager.GetConversationAsync(cg.Id);
+    }
+    
+    //Load UI lists.
+    private async Task GetUsersAsync()
+    {
+        userList = await _chatManager.GetUsersAsync();
+    }
+    private async Task GetChatGroupsAsync()
+    {
+        groupList = await _chatManager.GetChatGroupsAsync();
+        myChatGroups = groupList.Where(cg => cg.ChatUsers.Any(u => u.Id == CurrentUserId)).ToList();
     }
 }

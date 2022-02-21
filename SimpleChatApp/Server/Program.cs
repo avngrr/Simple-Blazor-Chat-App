@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleChatApp.Server;
 using SimpleChatApp.Server.Data;
@@ -13,6 +14,17 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
 
 builder.Services.AddIdentityServer()
     .AddApiAuthorization<AppUser, ApplicationDbContext>();
@@ -40,14 +52,6 @@ else
     app.UseHsts();
 }
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapRazorPages();
-    endpoints.MapControllers();
-    endpoints.MapFallbackToFile("index.html");
-    endpoints.MapHub<ChatHub>("/signalRHub");
-});
-
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
@@ -63,5 +67,5 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
-
+app.MapHub<ChatHub>("/chathub");
 app.Run();

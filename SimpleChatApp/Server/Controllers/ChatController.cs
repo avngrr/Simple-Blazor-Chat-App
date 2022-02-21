@@ -27,10 +27,23 @@ namespace SimpleChatApp.Server.Controllers
             return Ok(allUsers);
         }
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetUserDetailsAsync(string userId)
+        public async Task<IActionResult> GetChatWithUserAsync(string userId)
         {
-            var user = await _context.Users.Where(user => user.Id == userId).FirstOrDefaultAsync();
-            return Ok(user);
+            var currentUser = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
+            ChatGroup c = await _context.Chats.Where(c => c.IsPrivate && c.ChatUsers.Any(u => u.Id == userId) && c.ChatUsers.Any(u => u.Id == currentUser)).FirstOrDefaultAsync();
+            return Ok(c);
+        }
+        [HttpGet("chatgroups")]
+        public async Task<IActionResult> GetChatGroupsAsync()
+        {
+            var allChatgroups = await _context.Chats.Where(cg => cg.IsPrivate == false).ToListAsync();
+            return Ok(allChatgroups);
+        }
+        [HttpGet("chatgroups/{groupId}")]
+        public async Task<IActionResult> GetChatGroupDetailAsync(long groupId)
+        {
+            var chatGroup = await _context.Chats.Where(group => group.Id == groupId).FirstOrDefaultAsync();
+            return Ok(chatGroup);
         }
         [HttpPost]
         public async Task<IActionResult> SaveMessageAsync(Message message)
@@ -38,7 +51,7 @@ namespace SimpleChatApp.Server.Controllers
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
             message.FromId = userId;
             message.CreatedDate = DateTime.Now;
-            message.To = await _context.ChatGroups.Where(group => group.Id == message.ToId).FirstOrDefaultAsync();
+            message.Chat = await _context.Chats.Where(group => group.Id == message.ChatId).FirstOrDefaultAsync();
             await _context.Messages.AddAsync(message);
             return Ok(await _context.SaveChangesAsync());
         }
@@ -47,21 +60,31 @@ namespace SimpleChatApp.Server.Controllers
         {
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
             var messages = await _context.Messages
-                    .Where(m => (m.ToId == groupId))
+                    .Where(m => (m.ChatId == groupId))
                     .OrderBy(a => a.CreatedDate)
                     .Include(a => a.From)
-                    .Include(a => a.To)
+                    .Include(a => a.Chat)
                     .Select(x => new Message
                     {
                         From = x.From,
                         MessageText = x.MessageText,
                         CreatedDate = x.CreatedDate,
                         Id = x.Id,
-                        ToId = x.ToId,
-                        To = x.To,
+                        ChatId = x.ChatId,
+                        Chat = x.Chat,
                         FromId = x.FromId
                     }).ToListAsync();
             return Ok(messages);
+        }
+        [HttpPost("chatgroup")]
+        public async Task<IActionResult> CreateChatGroup(ChatGroup group)
+        {
+            var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
+            group.StartedById = userId;
+            AppUser user = await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            group.ChatUsers.Add(user);
+            await _context.Chats.AddAsync(group);
+            return Ok(await _context.SaveChangesAsync());
         }
     }
 }

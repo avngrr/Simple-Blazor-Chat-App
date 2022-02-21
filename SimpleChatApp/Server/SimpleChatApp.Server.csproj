@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>SimpleChatApp.Server-F82A31FA-35E0-488A-BCCC-60080269EB4D</UserSecretsId>
   </PropertyGroup>

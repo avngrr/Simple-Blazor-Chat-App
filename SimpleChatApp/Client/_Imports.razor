@@ -10,3 +10,9 @@
 @using SimpleChatApp.Client
 @using SimpleChatApp.Client.Shared
 @using MudBlazor
+@inject NavigationManager _navigationManager
+@inject ISnackbar _snackBar
+@inject IJSRuntime _jsRuntime
+@inject AuthenticationStateProvider _stateProvider;
+@using SimpleChatApp.Client.Manager
+@inject IChatManager _chatManager
