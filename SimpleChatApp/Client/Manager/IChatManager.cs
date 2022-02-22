@@ -9,5 +9,6 @@
         Task<ChatGroup> GetChatGroupDetailAsync(long groupId);
         Task SaveMessageAsync(Message message);
         Task CreateChatGroupAsync(ChatGroup chat);
+        Task<List<ChatGroup>> GetChatGroupsFromUserAsync(string userId);
     }
 }

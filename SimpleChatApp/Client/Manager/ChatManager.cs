@@ -18,6 +18,10 @@ namespace SimpleChatApp.Client.Manager
         {
             return await _httpClient.GetFromJsonAsync<ChatGroup>($"api/chat/users/{userId}");
         }
+        public async Task<List<ChatGroup>> GetChatGroupsFromUserAsync(string userId)
+        {
+            return await _httpClient.GetFromJsonAsync<List<ChatGroup>>($"api/chat/chatgroups/user/{userId}");
+        }
         public async Task<List<ChatGroup>> GetChatGroupsAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<ChatGroup>>("api/chat/chatgroups");

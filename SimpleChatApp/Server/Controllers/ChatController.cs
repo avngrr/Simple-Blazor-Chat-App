@@ -31,7 +31,28 @@ namespace SimpleChatApp.Server.Controllers
         {
             var currentUser = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
             ChatGroup c = await _context.Chats.Where(c => c.IsPrivate && c.ChatUsers.Any(u => u.Id == userId) && c.ChatUsers.Any(u => u.Id == currentUser)).FirstOrDefaultAsync();
+            if (c == null)
+            {
+                c = new()
+                {
+                    IsPrivate = true,
+                    Name = userId,
+                    StartedById = currentUser
+                };
+                c.ChatUsers.Add(await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync());
+                c.ChatUsers.Add(await _context.Users.Where(u => u.Id == currentUser).FirstOrDefaultAsync());
+                await _context.Chats.AddAsync(c);
+                _context.SaveChanges();
+            }
             return Ok(c);
+        }
+        [HttpGet("chatgroups/user/{userId}")]
+        public async Task<IActionResult> GetChatGroupsFromUserAsync(string userId)
+        {
+            var allChatgroups = await _context.Chats
+                .Where(cg => cg.ChatUsers.Any(u => u.Id == userId))
+                .ToListAsync();
+            return Ok(allChatgroups);
         }
         [HttpGet("chatgroups")]
         public async Task<IActionResult> GetChatGroupsAsync()
@@ -49,9 +70,23 @@ namespace SimpleChatApp.Server.Controllers
         public async Task<IActionResult> SaveMessageAsync(Message message)
         {
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
+            if (!message.Chat.ChatUsers.Any(u => u.Id == userId))
+            {
+                message.Chat.ChatUsers.Add(await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync());
+            }
             message.FromId = userId;
             message.CreatedDate = DateTime.Now;
-            message.Chat = await _context.Chats.Where(group => group.Id == message.ChatId).FirstOrDefaultAsync();
+            if (message.Chat.Id != 0)
+            {
+                message.Chat = await _context.Chats.Where(group => group.Id == message.ChatId).FirstOrDefaultAsync();
+            }
+            foreach (AppUser user in message.Chat.ChatUsers)
+            {
+                if (user.Id != null && user.Id != string.Empty)
+                {
+                    _context.Entry(user).State = EntityState.Unchanged;
+                }
+            }
             await _context.Messages.AddAsync(message);
             return Ok(await _context.SaveChangesAsync());
         }

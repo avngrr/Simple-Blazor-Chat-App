@@ -113,9 +113,10 @@
     {
         if (!string.IsNullOrEmpty(CurrentMessage))
         {
-            if (CurrentGroup.Id == 0)
+            if (CurrentGroup == null)
             {
                 CurrentGroup = new();
+                CurrentGroup.Id = 0;
                 CurrentGroup.Name = CurrentContact.Id;
                 CurrentGroup.ChatUsers.Add(CurrentContact);
                 CurrentGroup.IsPrivate = true;
@@ -129,8 +130,8 @@
                 FromId = CurrentUserId
             };
             await _chatManager.SaveMessageAsync(message);
-            await chatHub.SendAsync("SendMessageAsync", message, CurrentGroup.Name);
             CurrentGroup = await _chatManager.GetChatWithUserAsync(CurrentContact.Id);
+            await chatHub.SendAsync("SendMessageAsync", message, CurrentGroup.Name);
             CurrentMessage = string.Empty;
         } 
 
@@ -149,11 +150,11 @@
         {
             await chatHub.StartAsync();
         }
-        chatHub.On<Message, string>("ReceiveChatNotification", async (message, userName) =>
+        chatHub.On<Message, string>("ReceiveMessage", async (message, userName) =>
         {
             if (CurrentGroup.Id == message.ChatId)
             {
-                messages.Add(new Message { MessageText = message.MessageText, CreatedDate = message.CreatedDate, From = new AppUser() { UserName = userName } });
+                messages.Add(new Message { MessageText = message.MessageText, CreatedDate = message.CreatedDate, From = new AppUser() { Email = "test", UserName = userName } });
             }
             if (CurrentUserId == message.FromId)
             {
