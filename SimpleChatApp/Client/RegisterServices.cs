@@ -21,5 +21,6 @@ public static class RegisterServices
             config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
         });
         builder.Services.AddTransient<IChatManager, ChatManager>();
+
     }
 }

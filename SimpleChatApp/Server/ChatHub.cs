@@ -4,13 +4,13 @@ namespace SimpleChatApp.Server
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessageAsync(Message message, string groupName)
+        public async Task SendMessageAsync(Message message, string senderName)
         {
-            await Clients.All.SendAsync("ReceiveMessage", message, groupName);
+            await Clients.All.SendAsync("ReceiveMessage", message, senderName);
         }
-        public async Task ChatNotificationAsync(string message, long groupId, string senderUserId)
+        public async Task ChatNotificationAsync(string message, ChatGroup chat, string senderName, string senderUserId)
         {
-            await Clients.All.SendAsync("ReceiveChatNotification", message, groupId, senderUserId);
+            await Clients.All.SendAsync("ReceiveChatNotification", message, chat, senderName, senderUserId);
         }
     }
 }

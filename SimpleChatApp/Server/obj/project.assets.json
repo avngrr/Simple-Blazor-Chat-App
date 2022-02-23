@@ -1340,7 +1340,7 @@
           }
         }
       },
-      "System.Text.Json/6.0.0": {
+      "System.Text.Json/6.0.2": {
         "type": "package",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
@@ -1353,6 +1353,7 @@
           "lib/net6.0/System.Text.Json.dll": {}
         },
         "build": {
+          "build/System.Text.Json.targets": {},
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
@@ -1395,6 +1396,7 @@
           "Microsoft.AspNetCore.SignalR.Client": "6.0.2",
           "Microsoft.Extensions.Http": "6.0.0",
           "SimpleChatApp.Shared": "1.0.0",
+          "System.Text.Json": "6.0.2",
           "mudblazor": "6.0.6"
         },
         "compile": {
@@ -3746,10 +3748,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/6.0.0": {
-      "sha512": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
+    "System.Text.Json/6.0.2": {
+      "sha512": "0nE2gwXLn3PTBOPwORLqwuYvWB+Beomt9ZBX+6LmogMNKUvfD1SoDb/ycB1vBntT94rGaB/SvxEyeLu14H6aEg==",
       "type": "package",
-      "path": "system.text.json/6.0.0",
+      "path": "system.text.json/6.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3795,7 +3797,7 @@
         "lib/netcoreapp3.1/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.6.0.0.nupkg.sha512",
+        "system.text.json.6.0.2.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -3869,7 +3871,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.2",
       "SimpleChatApp.Client >= 1.0.0",
-      "SimpleChatApp.Shared >= 1.0.0"
+      "SimpleChatApp.Shared >= 1.0.0",
+      "System.Text.Json >= 6.0.2"
     ]
   },
   "packageFolders": {
@@ -3945,6 +3948,10 @@
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
+            "target": "Package",
+            "version": "[6.0.2, )"
+          },
+          "System.Text.Json": {
             "target": "Package",
             "version": "[6.0.2, )"
           }

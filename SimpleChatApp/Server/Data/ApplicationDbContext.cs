@@ -34,13 +34,6 @@ namespace SimpleChatApp.Server.Data
                     .WithMany(c => c.ChatUsers)
                     .UsingEntity("UserChats");
             });
-            builder.Entity<ChatGroup>(entity =>
-            {
-                entity.HasOne(cg => cg.StartedBy)
-                    .WithMany(u => u.StartedChats)
-                    .HasForeignKey(k => k.StartedById)
-                    .OnDelete(DeleteBehavior.ClientSetNull);
-            });
         }
     }
 }

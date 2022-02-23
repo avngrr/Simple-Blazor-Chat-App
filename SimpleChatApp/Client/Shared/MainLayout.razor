@@ -39,12 +39,11 @@
         var state = await _stateProvider.GetAuthenticationStateAsync();
         var user = state.User;
         CurrentUserId = user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault();
-        chatHub = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/chathub")).Build();
-        myChatGroups = await _chatManager.GetChatGroupsFromUserAsync(CurrentUserId);
+        chatHub = new HubConnectionBuilder().WithUrl(_navigationManager.ToAbsoluteUri("/chathub")).Build();       
         await chatHub.StartAsync();
-        chatHub.On<string, long, string>("ReceiveChatNotification", (message, groupId, senderUserId) =>
+        chatHub.On<string, ChatGroup, string, string>("ReceiveChatNotification", (message, chat, senderName, senderUserId) =>
         {
-            if (myChatGroups.Any(c => c.Id == groupId) && senderUserId != CurrentUserId)
+            if (chat.ChatUsers.Any(u => u.Id == CurrentUserId) && senderUserId != CurrentUserId)
             {
                 _snackBar.Add(message, Severity.Info, config =>
                 {
@@ -55,7 +54,7 @@
                     config.ActionColor = Color.Info;
                     config.Onclick = snackbar =>
                     {
-                        _navigationManager.NavigateTo($"chat/{groupId}");
+                        _navigationManager.NavigateTo($"chat/{chat.Id}");
                         return Task.CompletedTask;
                     };
                 });

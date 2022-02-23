@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BjgscWyGuTefTl/AQmMvxjl1oEeATVTaF5Wz/3uzVaQ=",
+  "Hash": "jbZO1wfImyBZxMVR+82YxSyNVGT5XTBvAG/wZzfScXg=",
   "Source": "SimpleChatApp.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -3414,7 +3414,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Enzo\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.1\\runtimes\\browser-wasm\\lib\\net6.0\\System.Text.Json.dll"
+      "OriginalItemSpec": "C:\\Users\\Enzo\\.nuget\\packages\\system.text.json\\6.0.2\\lib\\net6.0\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Text.RegularExpressions.dll",
@@ -4809,6 +4809,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Threading.Overlapped.dll"
+    },
+    {
+      "Identity": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\obj\\Debug\\net6.0\\build-gz\\CJbZeUao.gz",
+      "SourceId": "SimpleChatApp.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Text.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Text.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\obj\\Debug\\net6.0\\build-gz\\cK0+UwyP.gz",
@@ -7410,23 +7427,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Private.Uri.dll"
-    },
-    {
-      "Identity": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\obj\\Debug\\net6.0\\build-gz\\YKVhIarx.gz",
-      "SourceId": "SimpleChatApp.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/System.Text.Json.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Text.Json.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Text.Json.dll"
     },
     {
       "Identity": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\obj\\Debug\\net6.0\\build-gz\\ypjfb1dI.gz",

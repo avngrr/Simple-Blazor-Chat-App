@@ -109,3 +109,4 @@ C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\ne
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Common.dll
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\Microsoft.Extensions.Features.dll
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Server\bin\Debug\net6.0\System.Text.Json.dll

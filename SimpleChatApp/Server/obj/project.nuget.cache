@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4rq7ADqWS4QyjFYNhcvtZIciNR/58wZVfTTarVJFgW7kHXY2SzyiLjaZKlXbcXoCswMjB/IjvofZ2J+eypHjYg==",
+  "dgSpecHash": "5j7cd/MPunYppl6lQEIdSfwPTKuVVn/ugk+4lms8Fy9POgHq5IibwgzZzr9SWeoSNS8OdTXxTai5sLpb8kRiIg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Server\\SimpleChatApp.Server.csproj",
   "expectedPackageFiles": [
@@ -98,7 +98,7 @@
     "C:\\Users\\Enzo\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
-    "C:\\Users\\Enzo\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
+    "C:\\Users\\Enzo\\.nuget\\packages\\system.text.json\\6.0.2\\system.text.json.6.0.2.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],

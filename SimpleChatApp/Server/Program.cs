@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SimpleChatApp.Server;
 using SimpleChatApp.Server.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,10 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddJsonOptions(o =>
+{
+    o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddRazorPages();
 
 builder.Services.AddSignalR();
@@ -62,7 +66,6 @@ app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapRazorPages();
 app.MapControllers();

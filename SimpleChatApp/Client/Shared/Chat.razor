@@ -7,26 +7,31 @@
         <MudTabs>
             <MudTabPanel Text="Contacts">
                 <MudList Clickable="true">
-                    @foreach (AppUser user in userList)
+                    @if (userList is not null)
                     {
-                        <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadUserChat(user))">
-                            <div class="d-flex flex-row mt-n1 mb-n1">
-                                <div class="mr-4">
-                                    <MudBadge Class="my-2">
-                                        <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@user.UserName.ToUpper().FirstOrDefault()</MudAvatar>
-                                    </MudBadge>
+                        @foreach (AppUser user in userList)
+                        {
+                            <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadUserChat(user))">
+                                <div class="d-flex flex-row mt-n1 mb-n1">
+                                    <div class="mr-4">
+                                        <MudBadge Class="my-2">
+                                            <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@user.UserName.ToUpper().FirstOrDefault()</MudAvatar>
+                                        </MudBadge>
+                                    </div>
+                                    <div>
+                                        <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@user.UserName</MudText>
+                                        <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@user.Email</MudText>
+                                    </div>
                                 </div>
-                                <div>
-                                    <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@user.UserName</MudText>
-                                    <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@user.Email</MudText>
-                                </div>
-                            </div>
-                        </MudListItem>
+                            </MudListItem>
+                        }
                     }
                 </MudList>
             </MudTabPanel>
             <MudTabPanel Text="Groups">
-                @foreach (ChatGroup cg in groupList)
+                @if (groupList is not null)
+                {
+                    @foreach (ChatGroup cg in groupList)
                     {
                         <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadChat(cg))">
                             <div class="d-flex flex-row mt-n1 mb-n1">
@@ -42,36 +47,44 @@
                             </div>
                         </MudListItem>
                     }
+                }
                 <MudFab Color="Color.Primary" @onclick="CreateChatGroup" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
             </MudTabPanel>
         </MudTabs>
     </MudPaper>
     <MudPaper Class="m-3 flex-grow-1">
         <MudToolBar Dense="true">
-            @if (CurrentGroup.Id == 0)
+            @if (CurrentGroup is not null)
             {
-                <MudIcon Icon="@Icons.Material.Outlined.Person" Style="margin-right:10px"></MudIcon>
-                <MudText Typo="Typo.h6">chat</MudText>
-            }
-            else
-            {
-                <MudIcon Icon="@Icons.Material.Outlined.ChatBubble" Style="margin-right:10px"></MudIcon>
-                <MudText Typo="Typo.h6">@CurrentGroup.Id</MudText>
+                @if (CurrentGroup?.Name == null)
+                {
+                    <MudIcon Icon="@Icons.Material.Outlined.Person" Style="margin-right:10px"></MudIcon>
+                    <MudText Typo="Typo.h6">@CurrentGroup.ChatUsers.Where(u => u.Id != CurrentUserId).FirstOrDefault().Email</MudText>
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Outlined.ChatBubble" Style="margin-right:10px"></MudIcon>
+                    <MudText Typo="Typo.h6">@CurrentGroup.Name</MudText>
+                }       
             }
         </MudToolBar>
         <div class="d-flex flex-column px-4" style="max-height:65vh;min-height:65vh; overflow:scroll;" id="chatContainer">
-            @foreach (var message in messages)
+            @if (messages is not null)
             {
-                <div class="d-flex flex-row my-4">
-                    <div class="mr-4">
-                        <MudAvatar Color="Color.Secondary" Style="height:50px; width:50px;">@message.From.Email.ToUpper().FirstOrDefault()</MudAvatar>
+                @foreach (var message in messages)
+                {
+                    <div class="d-flex flex-row my-4">
+                        <div class="mr-4">
+                            <MudAvatar Color="Color.Secondary" Style="height:50px; width:50px;">@message.From.Email.ToUpper().FirstOrDefault()</MudAvatar>
+                        </div>
+                        <div>
+                            <MudText Typo="Typo.body1">@message.From.Email</MudText>
+                            <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@message.CreatedDate.ToString("dd MMM, yyyy hh:mm tt")</MudText>
+                            <MudText Typo="Typo.body2" Style=" padding: 15px;background-color: var(--mud-palette-background-grey);border-radius: 5px;margin-top:5px">@message.MessageText</MudText>
+                        </div>
                     </div>
-                    <div>
-                        <MudText Typo="Typo.body1">@message.From.Email</MudText>
-                        <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">@message.CreatedDate.ToString("dd MMM, yyyy hh:mm tt")</MudText>
-                        <MudText Typo="Typo.body2" Style=" padding: 15px;background-color: var(--mud-palette-background-grey);border-radius: 5px;margin-top:5px">@message.MessageText</MudText>
-                    </div>
-                </div>
+                }
+
             }
         </div>
         <MudPaper Elevation="25" Class="d-flex flex-row px-2 mx-4" Style="">
@@ -91,7 +104,8 @@
     private List<ChatGroup> myChatGroups;
     private List<Message> messages = new List<Message>();
 
-    private string CurrentUserId;    
+    private string CurrentUserId;
+    private string CurrentEmail;
     private string CurrentMessage;
     private ChatGroup CurrentGroup;
     private AppUser CurrentContact;
@@ -101,6 +115,7 @@
         var state = await _stateProvider.GetAuthenticationStateAsync();
         var user = state.User;
         CurrentUserId = user.Claims.Where(a => a.Type == "sub").Select(a => a.Value).FirstOrDefault();
+        CurrentEmail = user.Claims.Where(a => a.Type == "name").Select(a => a.Value).FirstOrDefault();
         if (!string.IsNullOrEmpty(GroupId))
         {
             await LoadGroupChat(long.Parse(GroupId));
@@ -113,27 +128,18 @@
     {
         if (!string.IsNullOrEmpty(CurrentMessage))
         {
-            if (CurrentGroup == null)
-            {
-                CurrentGroup = new();
-                CurrentGroup.Id = 0;
-                CurrentGroup.Name = CurrentContact.Id;
-                CurrentGroup.ChatUsers.Add(CurrentContact);
-                CurrentGroup.IsPrivate = true;
-            }
             var message = new Message()
-            {
-                MessageText = CurrentMessage,
-                ChatId = CurrentGroup.Id,
-                CreatedDate = DateTime.Now,
-                Chat = CurrentGroup,
-                FromId = CurrentUserId
-            };
+                {
+                    MessageText = CurrentMessage,
+                    ChatId = CurrentGroup.Id,
+                    CreatedDate = DateTime.Now,
+                    Chat = CurrentGroup,
+                    FromId = CurrentUserId
+                };
             await _chatManager.SaveMessageAsync(message);
-            CurrentGroup = await _chatManager.GetChatWithUserAsync(CurrentContact.Id);
-            await chatHub.SendAsync("SendMessageAsync", message, CurrentGroup.Name);
+            await chatHub.SendAsync("SendMessageAsync", message, CurrentEmail);
             CurrentMessage = string.Empty;
-        } 
+        }
 
     }
     private async Task CreateChatGroup()
@@ -158,7 +164,7 @@
             }
             if (CurrentUserId == message.FromId)
             {
-                await chatHub.SendAsync("ChatNotificationAsync", $"New Message From {userName}", CurrentGroup.Id, CurrentUserId);
+                await chatHub.SendAsync("ChatNotificationAsync", $"New Message From {userName}", CurrentGroup, CurrentEmail, CurrentUserId);
             }
             StateHasChanged();
         });
@@ -177,12 +183,12 @@
         await LoadChat(CurrentGroup);
     }
     private async Task LoadChat(ChatGroup cg)
-    {        
+    {
         _navigationManager.NavigateTo($"chat/{cg.Id}");
         messages = new List<Message>();
         messages = await _chatManager.GetConversationAsync(cg.Id);
     }
-    
+
     //Load UI lists.
     private async Task GetUsersAsync()
     {

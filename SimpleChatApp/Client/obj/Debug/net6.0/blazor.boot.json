@@ -52,6 +52,7 @@
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-x6oiDUwhHmg2BfCJ43UGTPi2SSASRtEyFgka5LU8eRM=",
       "MudBlazor.dll": "sha256-NMICktneuEAwnpIMXYRLyze23\/W40SaFOSVhLrvfjng=",
       "System.IO.Pipelines.dll": "sha256-OXr1SqT\/FRQmnxVa6n811yUyJraU4tzQs5skNCiDmiM=",
+      "System.Text.Json.dll": "sha256-GNHMTS7DVy1aAauVhZR3JjGF76QUTlzPpiF8Fk0Pf3U=",
       "Microsoft.CSharp.dll": "sha256-G204dE5axR66hiRzw+nCGd4NhoW2pyGNAYxvjKjtbY0=",
       "Microsoft.VisualBasic.Core.dll": "sha256-jwW4\/Q\/7wz7Q2oAlGi4JWwPkJHhDDnumGSirhZNF3h4=",
       "Microsoft.VisualBasic.dll": "sha256-N4tachHLSjJd8OmDatjMSqds2Igm2jRL\/Ak9jmWxzZg=",
@@ -186,7 +187,6 @@
       "System.Text.Encoding.Extensions.dll": "sha256-J3EqY3kRotd6lwsBjUZSn9UcoJKbkw5LL7dwMrlUnqE=",
       "System.Text.Encoding.dll": "sha256-Yrta4tY2YJF7\/1StEG3AiKrr3eMlbPdb2lj5PPB\/VuI=",
       "System.Text.Encodings.Web.dll": "sha256-mqUd9rV+ULZBsk7+Qcl+886WAp0amSxJC9ojAeSCXQg=",
-      "System.Text.Json.dll": "sha256-jAX7IydUELS95OefS4TTWC5JeWMR8Q2aBWgJ2s0y\/Rg=",
       "System.Text.RegularExpressions.dll": "sha256-bc0p5P4ozsXFtau0irzFLSd2SEw+owEVd+ZEGgGvYPA=",
       "System.Threading.Channels.dll": "sha256-6eiXOEgOeY2a4rS8O6mPZIZXCI5QUYktg\/nfvuMwPMc=",
       "System.Threading.Overlapped.dll": "sha256-LD7D2RbJz1bKipx1PIHqHoKcOP1czvsPiaWeAuFkn8Y=",
@@ -218,15 +218,15 @@
       "mscorlib.dll": "sha256-+5VU+MYaTQMTlRe9QKobEjWZWv6I9teAGdNndWSBqWE=",
       "netstandard.dll": "sha256-E5RFhGIaDH5QM6BEbFUuHU8U9wP6N6jbo5MCttzLOCM=",
       "System.Private.CoreLib.dll": "sha256-9NtEbYixyog7vUmeYXyyqzfBXUYl8wxoVQ26Ji7sNRg=",
-      "SimpleChatApp.Shared.dll": "sha256-0ZQSoNpdVtSm5PXUHAhA2Mw+VXNTAN6dq69VWjL\/UGE=",
-      "SimpleChatApp.Client.dll": "sha256-ODmJxJDzk7GzO7GT9LsAdDaYXA1AFhhOxa+ay39L0jw="
+      "SimpleChatApp.Shared.dll": "sha256-lkawo4ltlq8RlVSBhTmXIDOyOTLtP6RgVHR\/rR7NoiM=",
+      "SimpleChatApp.Client.dll": "sha256-rupSgEtksDNT3oz7uQPj0FRXFfSKXoiYRAdWFPPleXw="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "SimpleChatApp.Shared.pdb": "sha256-dfF4C1S3T1dG2V4kIwCFEUpdt\/WVMk2tvTZf\/ghAaEo=",
-      "SimpleChatApp.Client.pdb": "sha256-UMyU7M+EXF8gHmjgeTaGKB5FZ7WaF0SOvHmRkwlQpz0="
+      "SimpleChatApp.Shared.pdb": "sha256-ghgaxnH\/rhPPsczOCWejUmQQaQH\/87t2PgmzuJJQwwY=",
+      "SimpleChatApp.Client.pdb": "sha256-vwiplnpqwSqUFNkGAWRoz3FEtHDTTiOLnvuRUfHVZ74="
     },
     "runtime": {
       "dotnet.6.0.1.mbxe6xynlj.js": "sha256-awQsJ\/WxYhouHPuE+i3eJqjA4XClQlr2rD6nKvW80ww=",

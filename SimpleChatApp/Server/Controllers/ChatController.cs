@@ -30,14 +30,16 @@ namespace SimpleChatApp.Server.Controllers
         public async Task<IActionResult> GetChatWithUserAsync(string userId)
         {
             var currentUser = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
-            ChatGroup c = await _context.Chats.Where(c => c.IsPrivate && c.ChatUsers.Any(u => u.Id == userId) && c.ChatUsers.Any(u => u.Id == currentUser)).FirstOrDefaultAsync();
+            ChatGroup c = await _context.Chats
+                .Include(cg => cg.ChatUsers)
+                .Where(c => c.IsPrivate && c.ChatUsers.Any(u => u.Id == userId) && c.ChatUsers.Any(u => u.Id == currentUser))
+                .FirstOrDefaultAsync();
             if (c == null)
             {
                 c = new()
                 {
                     IsPrivate = true,
-                    Name = userId,
-                    StartedById = currentUser
+                    Name = null
                 };
                 c.ChatUsers.Add(await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync());
                 c.ChatUsers.Add(await _context.Users.Where(u => u.Id == currentUser).FirstOrDefaultAsync());
@@ -50,6 +52,7 @@ namespace SimpleChatApp.Server.Controllers
         public async Task<IActionResult> GetChatGroupsFromUserAsync(string userId)
         {
             var allChatgroups = await _context.Chats
+                .Include(cg => cg.ChatUsers)
                 .Where(cg => cg.ChatUsers.Any(u => u.Id == userId))
                 .ToListAsync();
             return Ok(allChatgroups);
@@ -98,7 +101,6 @@ namespace SimpleChatApp.Server.Controllers
                     .Where(m => (m.ChatId == groupId))
                     .OrderBy(a => a.CreatedDate)
                     .Include(a => a.From)
-                    .Include(a => a.Chat)
                     .Select(x => new Message
                     {
                         From = x.From,
@@ -115,7 +117,6 @@ namespace SimpleChatApp.Server.Controllers
         public async Task<IActionResult> CreateChatGroup(ChatGroup group)
         {
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
-            group.StartedById = userId;
             AppUser user = await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
             group.ChatUsers.Add(user);
             await _context.Chats.AddAsync(group);

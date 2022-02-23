@@ -778,7 +778,6 @@ C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\ne
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\mmUktUfP.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\816y+yaD.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\l+S+otD2.gz
-C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\YKVhIarx.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\fe08ehv7.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\Np0zGA42.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\carSf9lv.gz
@@ -909,3 +908,4 @@ C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\ne
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\I9ikExwa.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\qcIj021b.gz
 C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\yeS0PqHR.gz
+C:\Users\Enzo\Documents\Projects\SimpleChatApp\SimpleChatApp\Client\obj\Debug\net6.0\build-gz\CJbZeUao.gz
