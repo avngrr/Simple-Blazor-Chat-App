@@ -219,14 +219,14 @@
       "netstandard.dll": "sha256-+9Yr\/gSP3tCZAMbOdAcGhHGuMcyg\/AaxVKtt3tGsvao=",
       "System.Private.CoreLib.dll": "sha256-SnxOe5QK250duVAQOw0iWr1sODhUuVEUykExQyQ\/WSk=",
       "SimpleChatApp.Shared.dll": "sha256-DOniasR5st8OWNtcsGUTGQe+VrEpFB2yEff0fZyK4Qo=",
-      "SimpleChatApp.Client.dll": "sha256-r2n8ThvSEpP0dVjoicWMkKWjrcAu42L9BRsjavTVOjA="
+      "SimpleChatApp.Client.dll": "sha256-TmAoWewaPVg+0USeyrqiDFGq+JVYjg1sEUtz77ut8hI="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
       "SimpleChatApp.Shared.pdb": "sha256-sX9QfLOFYjXQz1xSfg1hht5VFgU5BRQjGMjSo6DTVwg=",
-      "SimpleChatApp.Client.pdb": "sha256-yVGPrxI9ALIzEPXoMHXt+m\/etQDNmZz2rcx170qNKzw="
+      "SimpleChatApp.Client.pdb": "sha256-0lVUf4ZSEbOpU1zIWQ\/e7dV3BG2mTnIkpfUHEdnDSDw="
     },
     "runtime": {
       "dotnet.6.0.2.663d6b8r47.js": "sha256-wbTVn69TU0+WI83iB+kky8tf\/BjZdYJeM0rUP96ur\/c=",

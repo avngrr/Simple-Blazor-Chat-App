@@ -66,7 +66,15 @@ namespace SimpleChatApp.Server.Controllers
         [HttpGet("chatgroups/{groupId}")]
         public async Task<IActionResult> GetChatGroupDetailAsync(long groupId)
         {
-            var chatGroup = await _context.Chats.Where(group => group.Id == groupId).FirstOrDefaultAsync();
+            var chatGroup = await _context.Chats.Where(group => group.Id == groupId).Include(cg => cg.ChatUsers).FirstOrDefaultAsync();
+            var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
+            if (!chatGroup.ChatUsers.Any(cu => cu.Id == userId))
+            {
+                AppUser user = await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+                chatGroup.ChatUsers.Add(user);
+                _context.Entry(chatGroup).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
             return Ok(chatGroup);
         }
         [HttpPost]
