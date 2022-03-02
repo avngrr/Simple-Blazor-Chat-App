@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tG8hAqYx/B+bW8Vwa5vIJblGF4w6sDricGWUIG8gI4zUN8SzPPPUyvzTOmKduvyrurdb89jBfP92o7iUb4YewQ==",
+  "dgSpecHash": "81O0KVyHABz76arG8OS6gN01q4HWPEAnkMkSJjSAkxCxsyKskT0+/aJhWP5Yld6416+mO8tDN2LS39ugxeLUQw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Enzo\\Documents\\Projects\\SimpleChatApp\\SimpleChatApp\\Client\\SimpleChatApp.Client.csproj",
   "expectedPackageFiles": [
@@ -58,7 +58,7 @@
     "C:\\Users\\Enzo\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.text.json\\6.0.2\\system.text.json.6.0.2.nupkg.sha512",
     "C:\\Users\\Enzo\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
-    "C:\\Users\\Enzo\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.1\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.1.nupkg.sha512"
+    "C:\\Users\\Enzo\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.2\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.2.nupkg.sha512"
   ],
   "logs": []
 }

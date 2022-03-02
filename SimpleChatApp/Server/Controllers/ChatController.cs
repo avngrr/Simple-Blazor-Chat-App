@@ -60,7 +60,7 @@ namespace SimpleChatApp.Server.Controllers
         [HttpGet("chatgroups")]
         public async Task<IActionResult> GetChatGroupsAsync()
         {
-            var allChatgroups = await _context.Chats.Where(cg => cg.IsPrivate == false).ToListAsync();
+            var allChatgroups = await _context.Chats.Where(cg => cg.IsPrivate == false).Include(cg => cg.ChatUsers).ToListAsync();
             return Ok(allChatgroups);
         }
         [HttpGet("chatgroups/{groupId}")]
@@ -73,23 +73,9 @@ namespace SimpleChatApp.Server.Controllers
         public async Task<IActionResult> SaveMessageAsync(Message message)
         {
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
-            if (!message.Chat.ChatUsers.Any(u => u.Id == userId))
-            {
-                message.Chat.ChatUsers.Add(await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync());
-            }
             message.FromId = userId;
             message.CreatedDate = DateTime.Now;
-            if (message.Chat.Id != 0)
-            {
-                message.Chat = await _context.Chats.Where(group => group.Id == message.ChatId).FirstOrDefaultAsync();
-            }
-            foreach (AppUser user in message.Chat.ChatUsers)
-            {
-                if (user.Id != null && user.Id != string.Empty)
-                {
-                    _context.Entry(user).State = EntityState.Unchanged;
-                }
-            }
+            _context.Entry(message.Chat).State = EntityState.Unchanged;
             await _context.Messages.AddAsync(message);
             return Ok(await _context.SaveChangesAsync());
         }
@@ -119,6 +105,7 @@ namespace SimpleChatApp.Server.Controllers
             var userId = User.Claims.Where(a => a.Type == ClaimTypes.NameIdentifier).Select(a => a.Value).FirstOrDefault();
             AppUser user = await _context.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
             group.ChatUsers.Add(user);
+            _context.Entry(user).State = EntityState.Unchanged;
             await _context.Chats.AddAsync(group);
             return Ok(await _context.SaveChangesAsync());
         }

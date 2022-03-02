@@ -29,26 +29,28 @@
                 </MudList>
             </MudTabPanel>
             <MudTabPanel Text="Groups">
-                @if (groupList is not null)
-                {
-                    @foreach (ChatGroup cg in groupList)
+                <MudList Clickable="true">
+                    @if (groupList is not null)
                     {
-                        <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadChat(cg))">
-                            <div class="d-flex flex-row mt-n1 mb-n1">
-                                <div class="mr-4">
-                                    <MudBadge Class="my-2">
-                                        <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@cg.Name.ToUpper().FirstOrDefault()</MudAvatar>
-                                    </MudBadge>
+                        @foreach (ChatGroup cg in groupList)
+                        {
+                            <MudListItem Class="pa-0 px-2" OnClick="@(() => LoadGroupChat(cg.Id))">
+                                <div class="d-flex flex-row mt-n1 mb-n1">
+                                    <div class="mr-4">
+                                        <MudBadge Class="my-2">
+                                            <MudAvatar Color="Color.Dark" Style="height:50px; width:50px;">@cg.Name.ToUpper().FirstOrDefault()</MudAvatar>
+                                        </MudBadge>
+                                    </div>
+                                    <div>
+                                        <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@cg.Name</MudText>
+                                        <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">Users: @cg.ChatUsers.Count</MudText>
+                                    </div>
                                 </div>
-                                <div>
-                                    <MudText Typo="Typo.body2" Class="mt-3 mb-n2">@cg.Name</MudText>
-                                    <MudText Typo="Typo.caption" Style="font-size: xx-small!important;">Users: @cg.ChatUsers.Count</MudText>
-                                </div>
-                            </div>
-                        </MudListItem>
+                            </MudListItem>
+                        }
                     }
-                }
-                <MudFab Color="Color.Primary" @onclick="CreateChatGroup" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
+                </MudList>
+                <MudFab Color="Color.Primary" @onclick="CreateGroupGroup" StartIcon="@Icons.Material.Filled.Add" Size="Size.Small" />
             </MudTabPanel>
         </MudTabs>
     </MudPaper>
@@ -65,7 +67,7 @@
                 {
                     <MudIcon Icon="@Icons.Material.Outlined.ChatBubble" Style="margin-right:10px"></MudIcon>
                     <MudText Typo="Typo.h6">@CurrentGroup.Name</MudText>
-                }       
+                }
             }
         </MudToolBar>
         <div class="d-flex flex-column px-4" style="max-height:65vh;min-height:65vh; overflow:scroll;" id="chatContainer">
@@ -94,7 +96,15 @@
         </MudPaper>
     </MudPaper>
 </div>
-
+<MudDialog @bind-IsVisible="CreateGroupVisible" Options="dialogOptions">
+    <DialogContent>
+        <MudTextField @bind-Value="CreateGroupName" Label="Name"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CreateGroupCancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="SubmitCreateGroup">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
 @code {
     [CascadingParameter] public HubConnection chatHub { get; set; }
     [Parameter] public string? GroupId { get; set; }
@@ -109,6 +119,26 @@
     private string CurrentMessage;
     private ChatGroup CurrentGroup;
     private AppUser CurrentContact;
+
+    private bool CreateGroupVisible = false;
+    private string CreateGroupName = "";
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+    private async Task SubmitCreateGroup()
+    {
+        if (CreateGroupName != "")
+        {
+            CreateGroupVisible = false;
+            await _chatManager.CreateChatGroupAsync(new ChatGroup()
+                {
+                    Name = CreateGroupName,
+                    IsPrivate = false
+                });
+            CreateGroupName = "";
+            await GetChatGroupsAsync();
+        }
+    }
+    private void CreateGroupCancel() => CreateGroupVisible = false;
+    private void CreateGroupGroup() => CreateGroupVisible = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -142,10 +172,7 @@
         }
 
     }
-    private async Task CreateChatGroup()
-    {
 
-    }
     private async Task SetUpHubAsync()
     {
         if (chatHub == null)
